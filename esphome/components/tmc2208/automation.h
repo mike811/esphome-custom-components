@@ -18,7 +18,7 @@ template<typename... Ts> class ConfigureAction : public Action<Ts...>, public Pa
   TEMPLATABLE_VALUE(uint32_t, tcool_threshold)
   TEMPLATABLE_VALUE(uint32_t, tpwm_threshold)
 
-  void const Ts &...x override {
+  void play(const Ts &...x) override {
     if (this->inverse_direction_.has_value())
       this->parent_->write_field(SHAFT_FIELD, (uint8_t) this->inverse_direction_.value(x...));
 
@@ -60,7 +60,7 @@ template<typename... Ts> class CurrentsAction : public Action<Ts...>, public Par
   TEMPLATABLE_VALUE(float, run_current)
   TEMPLATABLE_VALUE(float, hold_current)
 
-  void const Ts &...x override {
+  void play(const Ts &...x) override {
     if (this->standstill_mode_.has_value()) {
       if (this->parent_->read_field(EN_SPREADCYCLE_FIELD)) {
         ESP_LOGW(TAG, "standstill modes are only possible with StealthChop enabled.");
@@ -98,7 +98,7 @@ template<typename... Ts> class ChopConfAction : public Action<Ts...>, public Par
   TEMPLATABLE_VALUE(uint8_t, hend)
   TEMPLATABLE_VALUE(uint8_t, hstrt)
 
-  void const Ts &...x override {
+  void play(const Ts &...x) override {
     if (this->tbl_.has_value())
       this->parent_->write_field(TBL_FIELD, this->tbl_.value(x...));
 
@@ -120,7 +120,7 @@ template<typename... Ts> class PWMConfAction : public Action<Ts...>, public Pare
   TEMPLATABLE_VALUE(uint8_t, pwmgrad)
   TEMPLATABLE_VALUE(uint8_t, pwmofs)
 
-  void const Ts &...x override {
+  void play(const Ts &...x) override {
     if (this->pwmlim_.has_value())
       this->parent_->write_field(PWM_LIM_FIELD, this->pwmlim_.value(x...));
 
