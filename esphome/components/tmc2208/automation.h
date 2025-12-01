@@ -150,7 +150,7 @@ template<typename... Ts> class SyncAction : public Action<Ts...>, public Parente
 
   void set_drivers(const std::vector<TMC2208Component *> &drivers) { drivers_ = drivers; }
 
-  void const Ts &...x override {
+  void play(const Ts &...x) override {
     ESP_LOGV(TAG, "reading register values from 'master'");
     const uint32_t gstat = this->parent_->read_register(GSTAT);
     const uint32_t ihold_irun = this->parent_->read_register(IHOLD_IRUN);
