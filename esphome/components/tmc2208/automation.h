@@ -40,7 +40,7 @@ template<typename... Ts> class ActivationAction : public Action<Ts...>, public P
   TEMPLATABLE_VALUE(bool, activate)
   TEMPLATABLE_VALUE(bool, toff_recovery)
 
-  void const Ts &...x override {
+  void play(const Ts &...x) override {
     if (this->activate_.has_value()) {
       this->parent_->enable(this->activate_.value(x...));
     }
